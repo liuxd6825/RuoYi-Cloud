@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.workflow.mapper.TaskViewMapper">
+    <!-- 定义 resultMap 映射 -->
+    <resultMap id="taskViewResultMap" type="com.ruoyi.workflow.domain.TaskView">
+        <result property="id" column="ID_"/>
+        <result property="rev" column="REV_"/>
+        <result property="executionId" column="EXECUTION_ID_"/>
+        <result property="procDefId" column="PROC_DEF_ID_"/>
+        <result property="caseExecutionId" column="CASE_EXECUTION_ID_"/>
+        <result property="caseInstId" column="CASE_INST_ID_"/>
+        <result property="caseDefId" column="CASE_DEF_ID_"/>
+        <result property="name" column="NAME_"/>
+        <result property="parentTaskId" column="PARENT_TASK_ID_"/>
+        <result property="description" column="DESCRIPTION_"/>
+
+        <result property="taskDefKey" column="TASK_DEF_KEY_"/>
+        <result property="owner" column="OWNER_"/>
+        <result property="assignee" column="ASSIGNEE_"/>
+        <result property="assigneeName" column="ASSIGNEE_NAME_"/>
+        <result property="delegation" column="DELEGATION_"/>
+        <result property="priority" column="PRIORITY_"/>
+        <result property="createTime" column="CREATE_TIME_"/>
+        <result property="lastUpdated" column="LAST_UPDATED_"/>
+        <result property="dueDate" column="DUE_DATE_"/>
+        <result property="followUpDate" column="FOLLOW_UP_DATE_"/>
+
+        <result property="suspensionState" column="SUSPENSION_STATE_"/>
+        <result property="tenantId" column="TENANT_ID_"/>
+        <result property="taskState" column="TASK_STATE_"/>
+        <result property="followUpDate" column="FOLLOW_UP_DATE_"/>
+    </resultMap>
+
+
+    <!-- 查询用户信息 -->
+    <select id="selectByAssigneeNamePage" resultMap="taskViewResultMap">
+        SELECT * FROM ACT_RU_TASK WHERE ASSIGNEE_NAME_=#{assigneeName}
+    </select>
+
+
+</mapper>
