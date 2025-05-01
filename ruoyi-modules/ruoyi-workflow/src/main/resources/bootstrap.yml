@@ -23,3 +23,7 @@ spring:
         # 共享配置
         shared-configs:
           - workflow-dev.yaml
+dtm:
+  service:
+    name: "dtmservice.grpc"
+    registryType: nacos
