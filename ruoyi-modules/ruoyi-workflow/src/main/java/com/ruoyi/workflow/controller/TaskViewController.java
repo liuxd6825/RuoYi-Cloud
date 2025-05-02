@@ -1,5 +1,6 @@
 package com.ruoyi.workflow.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.core.web.controller.BaseController;
 import com.ruoyi.common.core.web.page.TableDataInfo;
 import com.ruoyi.common.security.annotation.RequiresPermissions;
@@ -27,9 +28,8 @@ public class TaskViewController extends BaseController {
      * 获取参数配置列表
      */
     @GetMapping("/list")
-    public TableDataInfo list() {
-        startPage();
-        List<TaskView> list = taskViewService.getByAssigneeNamePage("张三",0, 100);
-        return getDataTable(list);
+    public PageInfo<TaskView> list() {
+        PageInfo<TaskView> list = taskViewService.getByAssigneeName("张三",0, 100);
+        return  list;
     }
 }

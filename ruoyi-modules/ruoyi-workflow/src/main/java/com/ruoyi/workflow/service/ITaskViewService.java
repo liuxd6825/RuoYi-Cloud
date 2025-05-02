@@ -1,9 +1,10 @@
 package com.ruoyi.workflow.service;
 
+import com.github.pagehelper.PageInfo;
 import com.ruoyi.workflow.domain.TaskView;
 
 import java.util.List;
 
 public interface ITaskViewService {
-    List<TaskView> getByAssigneeNamePage(String assigneeName , int offset, int pageSize);
+    PageInfo<TaskView> getByAssigneeName(String assigneeName , int pageNum, int pageSize);
 }

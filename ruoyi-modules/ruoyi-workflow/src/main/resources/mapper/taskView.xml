@@ -2,6 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
 <mapper namespace="com.ruoyi.workflow.mapper.TaskViewMapper">
     <!-- 定义 resultMap 映射 -->
     <resultMap id="taskViewResultMap" type="com.ruoyi.workflow.domain.TaskView">
@@ -35,7 +38,7 @@
 
 
     <!-- 查询用户信息 -->
-    <select id="selectByAssigneeNamePage" resultMap="taskViewResultMap">
+    <select id="selectByAssigneeName" resultMap="taskViewResultMap">
         SELECT * FROM ACT_RU_TASK WHERE ASSIGNEE_NAME_=#{assigneeName}
     </select>
 

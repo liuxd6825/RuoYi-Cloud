@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface TaskViewMapper {
-    List<TaskView> selectByAssigneeNamePage(@Param("assigneeName") String assigneeName, @Param("offset") int offset,  @Param("pageSize") int pageSize);
+    List<TaskView> selectByAssigneeName(@Param("assigneeName") String assigneeName);
 }
 
 

@@ -1,20 +1,26 @@
 package com.ruoyi.workflow.service.impl;
 
-import com.ruoyi.workflow.service.IWorkflowService;
+import com.ruoyi.workflow.service.IJumpService;
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.runtime.Execution;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.bpm.model.bpmn.BpmnModelInstance;
 import org.camunda.bpm.model.bpmn.instance.Activity;
+import org.camunda.bpm.model.bpmn.instance.FlowNode;
+import org.camunda.bpm.model.bpmn.instance.SequenceFlow;
+import org.camunda.bpm.model.xml.instance.ModelElementInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
+import java.util.*;
 
 @Service
-public class WorkflowService implements IWorkflowService {
+public class JumpService implements IJumpService {
 
     @Autowired
     private ProcessEngine processEngine;
@@ -59,6 +65,8 @@ public class WorkflowService implements IWorkflowService {
         Activity activity = execution.getBpmnModelInstance().getModelElementById(activityId);
         return activity.getLoopCharacteristics() != null;
     }
+
+
 
 
 }

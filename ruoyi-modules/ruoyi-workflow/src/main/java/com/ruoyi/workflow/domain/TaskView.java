@@ -1,8 +1,11 @@
 package com.ruoyi.workflow.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TaskView {
+public class TaskView implements Serializable {
+    private static final long serialVersionUID = -6722806544552880086L;
+
     private String id;
     private String rev;
     private String executionId;
