@@ -10,7 +10,6 @@
         <version>3.6.5</version>
     </parent>
 
-    <groupId>com.ruoyi.common</groupId>
     <artifactId>ruoyi-common-rsql</artifactId>
 
     <dependencies>
