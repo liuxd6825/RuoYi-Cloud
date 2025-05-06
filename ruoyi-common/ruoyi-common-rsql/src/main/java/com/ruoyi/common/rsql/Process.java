@@ -51,7 +51,7 @@ public class Process {
             process.onNotEquals(name, value, ex.getVal());
         } else if (expr instanceof EqualsComparison) {
             EqualsComparison ex = (EqualsComparison) expr;
-            String name = ex.expressionName();
+            String name = ex.getIdentifier().getVal();
             Object value = Utils.getValue(ex.getVal());
             process.onEquals(name, value, ex.getVal());
         } else if (expr instanceof LikeComparison) {

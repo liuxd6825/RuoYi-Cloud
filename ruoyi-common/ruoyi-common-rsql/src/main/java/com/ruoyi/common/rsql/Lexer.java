@@ -2,12 +2,18 @@ package com.ruoyi.common.rsql;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.apache.commons.lang3.StringUtils;
+
+import static com.ruoyi.common.rsql.TokenType.*;
 
 public class Lexer {
     private int pos;
     private String buf;
     private int buflen;
+    // 使用数组来表示
+    private static final String[] FUNC_TYPES = {"sub"};
 
     public Lexer(String input) {
         this.buf = input;
@@ -81,8 +87,20 @@ public class Lexer {
     }
 
     private Token processFunc() {
-        // TODO: Implement function processing logic
+        // Iterate over all defined function types
+        for (String fn : FUNC_TYPES) {
+            // Check if the current position (pos) is the start of a function of type fn
+            if (isFunc(pos, fn)) {
+                // Calculate the length of the function token starting at pos
+                int tokenLen = getFuncLength(pos, fn);
+                // Generate and return a token of type FuncToken starting from pos with the calculated length
+                return generateToken(FuncToken, pos + tokenLen);
+            }
+        }
+
+        // If no function was found, return an unknown token
         return unknownToken();
+
     }
 
     private boolean isFunc(int pos, String funName) {
@@ -213,25 +231,121 @@ public class Lexer {
 
 
     private Token processString() {
-        // TODO: Implement string processing logic
+        char currentChar = charAt(pos);
+        // 检查是否是单引号或双引号
+        if (currentChar == '\'' || currentChar == '"') {
+            char quote = currentChar;
+            int idx = buf.indexOf(quote, pos + 1) ; // 查找引号的结束位置
+
+            // 处理转义字符
+            while (idx != -1 && charAt(idx - 1) == '\\') {
+                idx = buf.indexOf(quote, idx + 1) + idx + 1;
+            }
+
+            // 如果没有找到结束的引号，抛出异常
+            if (idx == -1) {
+                throw new RuntimeException(String.format("Unterminated quote at position %d, %d", pos, idx));
+            }
+
+            // 创建并返回 token
+            String value = buf.substring(pos + 1, idx).replaceAll("\\\\" + quote, String.valueOf(quote));
+            Token token = new Token(StringToken, value, pos,"");
+
+            // 更新当前位置
+            pos = idx + 1;
+
+            return token;
+        }
+
+        // 如果没有匹配的引号，返回未知 token
         return unknownToken();
     }
 
+
+
     private Token processIdentifier() {
-        // TODO: Implement identifier processing logic
+        AtomicInteger idx = new AtomicInteger(pos);
+
+        // 检查当前字符是否为字母
+        if (isAlpha(idx.get())) {
+            idx.getAndIncrement();  // 移动到下一个字符
+            // 定义一个过程，处理后续的字母和数字
+            Runnable process = () -> {
+                while (isDigit(idx.get()) || isAlpha(idx.get())) {
+                    idx.getAndIncrement();
+                }
+            };
+
+            process.run();  // 执行过程
+
+            // 如果遇到点（"."）并且后面是字母，继续处理
+            while (charAt(idx.get()) == '.' && isAlpha(idx.get() + 1)) {
+                idx.addAndGet(2);
+                process.run();
+            }
+
+            // 生成并返回标识符 Token
+            return generateToken(IdentifierToken, idx.get());
+        }
+
+        // 如果不是字母，则返回未知 Token
         return unknownToken();
+
     }
 
     private Token processReserved() {
-        // TODO: Implement reserved word processing logic
+        int idx = pos;
+
+        if (isString(idx, "(")) {
+            return generateToken(LeftParenToken, idx + 1);
+        } else if (isString(idx, ")")) {
+            return generateToken(RightParenToken, idx + 1);
+        } else if (isString(idx, ",")) {
+            return generateToken(CommaToken, idx + 1);
+        } else if (isString(idx, "!=")) {
+            return generateToken(NotEqualsToken, idx + 2);
+        } else if (isString(idx, "==")) {
+            return generateToken(EqualsToken, idx + 2);
+        } else if (isString(idx, ">=")) {
+            return generateToken(GreaterOrEqualsToken, idx + 2);
+        } else if (isString(idx, ">")) {
+            return generateToken(GreaterToken, idx + 1);
+        } else if (isString(idx, "<=")) {
+            return generateToken(LessOrEqualsToken, idx + 2);
+        } else if (isString(idx, "<")) {
+            return generateToken(LessToken, idx + 1);
+        } else if (isString(idx, "=in=")) {
+            return generateToken(InToken, idx + 4);
+        } else if (isString(idx, "=out=")) {
+            return generateToken(NotInToken, idx + 5);
+        } else if (isString(idx, "=contains=")) {
+            return generateToken(ContainsToken, idx + 10);
+        } else if (isString(idx, "=!contains=")) {
+            return generateToken(NotContainsToken, idx + 11);
+        } else if (isString(idx, "==~") || isString(idx, "~==")) {
+            return generateToken(LikeToken, idx + 3);
+        } else if (isString(idx, "~=") || isString(idx, "=~")) {
+            return generateToken(LikeToken, idx + 2);
+        } else if (isString(idx, "!=~") || isString(idx, "!~=")) {
+            return generateToken(NotLikeToken, idx + 3);
+        } else if (isString(idx, "=null=")) {
+            return generateToken(IsNullToken, idx + 6);
+        } else if (isString(idx, "=!null=")) {
+            return generateToken(NotIsNullToken, idx + 7);
+        } else if (isString(idx, "=start=")) {
+            return generateToken(IsNullToken, idx + 7);
+        } else if (isString(idx, "=end=")) {
+            return generateToken(NotIsNullToken, idx + 5);
+        }
+
         return unknownToken();
     }
 
-    private boolean isString(int pos, String str) {
-        if (pos + str.length() > buflen) {
+    private boolean isString(int pos, String value) {
+        if (pos + value.length() > buflen) {
             return false;
         }
-        return buf.substring(pos, pos + str.length()).equals(str);
+        return buf.substring(pos, pos + value.length()).equals(value);
     }
 
     private boolean isBlankBefore(int pos) {

@@ -8,7 +8,7 @@
         <version>3.6.5</version>
     </parent>
 
-    <artifactId>ruoyi-modules-system</artifactId>
+    <artifactId>ruoyi-modules-workflow</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <description>
@@ -87,6 +87,13 @@
         <dependency>
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common-datascope</artifactId>
+        </dependency>
+
+        <!-- RuoYi Common Rsql -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-common-rsql</artifactId>
+            <version>3.6.5</version>
         </dependency>
 
         <!-- RuoYi Common Log -->

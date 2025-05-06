@@ -60,32 +60,32 @@ public class SQLProcess implements IProcess {
     @Override
     public void onEquals(String name, Object value, Value rValue) {
         Object val = getValue(rValue);
-        add("%s=%v", name, val);
+        add("%s=%s", name, val);
     }
 
     @Override
     public void onNotEquals(String name, Object value, Value rValue) {
         Object val = getValue(rValue);
-        add("%s!=(%v)", name, val);
+        add("%s!=(%s)", name, val);
     }
 
     @Override
     public void onLike(String name, Object value, Value rValue) {
         String val = getLikeValue(rValue);
-        add("%s like %v", name, val);
+        add("%s like %s", name, val);
     }
 
     @Override
     public void onNotLike(String name, Object value, Value rValue) {
         String val = getLikeValue(rValue);
-        add("%s not like %v", name, val);
+        add("%s not like %s", name, val);
     }
 
     @Override
     public void onContains(String name, Object value, Value rValue) {
         if (rValue instanceof StringValue) {
             StringValue s = (StringValue) rValue;
-            add("%s like '%%%v%%'", name, s.getValue());
+            add("%s like '%%%s%%'", name, s.getValue());
         } else {
             throw new RuntimeException("invalid rsql type in contains");
         }
@@ -95,7 +95,7 @@ public class SQLProcess implements IProcess {
     public void onNotContains(String name, Object value, Value rValue) {
         if (rValue instanceof StringValue) {
             StringValue s = (StringValue) rValue;
-            add("%s not like '%%%v%%'", name, s.getValue());
+            add("%s not like '%%%s%%'", name, s.getValue());
         } else {
             throw new RuntimeException("invalid rsql type in OnNotContains");
         }
@@ -104,25 +104,25 @@ public class SQLProcess implements IProcess {
     @Override
     public void onGreaterThan(String name, Object value, Value rValue) {
         Object val = getValue(rValue);
-        add("%s>%v", name, val);
+        add("%s>%s", name, val);
     }
 
     @Override
     public void onGreaterThanOrEquals(String name, Object value, Value rValue) {
         Object val = getValue(rValue);
-        add("%s>=%v", name, val);
+        add("%s>=%s", name, val);
     }
 
     @Override
     public void onLessThan(String name, Object value, Value rValue) {
         Object val = getValue(rValue);
-        add("%s<%v", name, val);
+        add("%s<%s", name, val);
     }
 
     @Override
     public void onLessThanOrEquals(String name, Object value, Value rValue) {
         Object val = getValue(rValue);
-        add("%s<=%v", name, val);
+        add("%s<=%s", name, val);
     }
 
     @Override
