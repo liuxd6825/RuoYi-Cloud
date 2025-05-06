@@ -24,6 +24,62 @@ public class PageDomain
     /** 分页参数合理化 */
     private Boolean reasonable = true;
 
+    /** 数据过滤 **/
+    private String filter="";
+    private String fields="";
+    private String sort="";
+    private String groupCols="";
+    private String groupKeys="";
+    private String valueCols="";
+
+    public String getGroupCols() {
+        return groupCols;
+    }
+
+    public void setGroupCols(String groupCols) {
+        this.groupCols = groupCols;
+    }
+
+    public String getGroupKeys() {
+        return groupKeys;
+    }
+
+    public void setGroupKeys(String groupKeys) {
+        this.groupKeys = groupKeys;
+    }
+
+    public String getValueCols() {
+        return valueCols;
+    }
+
+    public void setValueCols(String valueCols) {
+        this.valueCols = valueCols;
+    }
+
+    public String getSort(){
+        return sort;
+    }
+
+    public void setSort(String val){
+        this.sort = val;
+    }
+
+    public String getFields(){
+        return fields;
+    }
+
+    public void setFields(String val){
+        this.fields = val;
+    }
+
+    public String getFilter(){
+        return filter;
+    }
+
+    public void setFilter(String filter){
+        this.filter = filter;
+    }
+
     public String getOrderBy()
     {
         if (StringUtils.isEmpty(orderByColumn))

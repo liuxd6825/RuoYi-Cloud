@@ -17,11 +17,7 @@
     <!-- 配置插件 -->
     <plugins>
         <!-- 配置 PageHelper 插件 -->
-        <plugin interceptor="com.github.pagehelper.PageInterceptor">
-            <property name="dialect" value="mysql"/> <!-- 数据库方言 -->
-            <property name="reasonable" value="true"/> <!-- 合理化分页 -->
-            <property name="supportMethodsArguments" value="true"/> <!-- 支持方法参数传递分页 -->
-        </plugin>
-    </plugins>
+        <plugin interceptor="com.ruoyi.workflow.mybatis.PagingInterceptor"/>
+     </plugins>
 
 </configuration>

@@ -2,6 +2,7 @@ package com.ruoyi.workflow.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.ruoyi.common.web.query.PageQuery;
 import com.ruoyi.workflow.domain.TaskView;
 import com.ruoyi.workflow.mapper.TaskViewMapper;
 import com.ruoyi.workflow.service.ITaskViewService;
@@ -24,18 +25,12 @@ public class TaskViewService implements ITaskViewService {
 
     }
 
-    public PageInfo<TaskView> getByAssigneeName(String assigneeName, int pageNum, int pageSize) {
+    public PageInfo<TaskView> getByAssigneeName(String assigneeName, PageQuery pageQuery) {
         if (dtmClient != null) {
             System.out.println(" dtm client is ok \n");
         }
-        PageInfo<TaskView> pageInfo;
-        PageHelper.startPage(pageNum, pageSize);
-        try{
-            List<TaskView> users = taskViewMapper.selectByAssigneeName(assigneeName);
-            pageInfo = new PageInfo<>(users);
-        } finally {
-            PageHelper.clearPage();
-        }
+        List<TaskView> users = taskViewMapper.selectByAssigneeName(assigneeName, pageQuery);
+        PageInfo pageInfo = new PageInfo<>(users);
         return pageInfo;
     }
 

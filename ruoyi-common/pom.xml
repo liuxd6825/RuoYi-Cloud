@@ -21,11 +21,17 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.15</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <modelVersion>4.0.0</modelVersion>
 
     <modules>
-        <module>ruoyi-common-rsql</module>
+        <module>ruoyi-common-web</module>
         <module>ruoyi-common-log</module>
         <module>ruoyi-common-core</module>
         <module>ruoyi-common-redis</module>

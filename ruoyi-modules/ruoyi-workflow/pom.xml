@@ -89,10 +89,16 @@
             <artifactId>ruoyi-common-datascope</artifactId>
         </dependency>
 
-        <!-- RuoYi Common Rsql -->
+        <!-- RuoYi Common core -->
         <dependency>
             <groupId>com.ruoyi</groupId>
-            <artifactId>ruoyi-common-rsql</artifactId>
+            <artifactId>ruoyi-common-core</artifactId>
+        </dependency>
+
+        <!-- RuoYi Common web -->
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-common-web</artifactId>
             <version>3.6.5</version>
         </dependency>
 
@@ -112,6 +118,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.15</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>
